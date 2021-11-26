@@ -1,4 +1,4 @@
-# Network analysis of senders and recipients of emails in the Shell papers
+# Network analysis of email sender and recipient domains
 
 ## Proposed idea
 
