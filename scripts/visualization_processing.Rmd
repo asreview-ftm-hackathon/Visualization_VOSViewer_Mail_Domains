@@ -147,7 +147,7 @@ data_single <- data_clean %>%
 ```{r message=FALSE, warning=FALSE}
 
 #create df of unique domains with weights as list column
-domains <- data_single %>%
+df_nodes <- data_single %>%
   count(strings) %>%
   distinct() %>%
   arrange(strings) %>%
@@ -157,7 +157,7 @@ domains <- data_single %>%
   select(id, label, Documents)
 
 #transpose to list
-items <- domains %>%
+items <- df_nodes %>%
   purrr::transpose()
 
 #define helper function to modify list elements
@@ -203,15 +203,15 @@ for (i in nodes) {
 
   nodes1 <- list$combinations %>%
     filter(strings == i) %>%
-    rename(source_id = strings)
+    rename(source = strings)
   
   nodes2 <- list$combinations %>%
     filter(!strings == i) %>%
-    rename(target_id = strings)
+    rename(target = strings)
   
   edges <- nodes1 %>%
     left_join(nodes2, by = "id") %>%
-    count(source_id, target_id)
+    count(source, target)
   
   combinations <- list$combinations %>%
     filter(!strings == i)
@@ -221,11 +221,39 @@ for (i in nodes) {
 
 }
 
-#create list from dataframe with edge list
-links <- list$edges %>%
-  filter(!is.na(target_id)) %>%
-  rename(strength = n) %>%
+#modify dataframe with edge list
+df_edges <- list$edges %>%
+  filter(!is.na(target)) %>%
+  rename(strength = n)
+
+#replace source/target strings with source/target ids matching those in node list
+ids <- df_nodes %>%
+  select(label, id)
+  
+df_edges <- df_edges %>%
+  left_join(ids, by = c("source" = "label")) %>%
+  rename(source_id = id) %>%
+  left_join(ids, by = c("target" = "label")) %>%
+  rename(target_id = id) %>%
+  select(source_id, target_id, strength)
+  
+#create list
+links <- df_edges %>%  
   purrr::transpose()
+
+source_id <- links %>%
+  select(source_id) %>%
+  distinct() %>%
+
+target_id <- links %>%
+  select(target_id) %>%
+  distinct()
+
+source_id_match <- source_id %>%
+  left_join(df_nodes, by = c("source_id" = "label"))
+
+target_id_match <- target_id %>%
+  left_join(df_nodes, by = c("target_id" = "label"))
   
 rm(i, nodes1, nodes2, combinations, list, edges)
   
