@@ -1,13 +1,12 @@
 ---
-title: "ASReview FTM Hackathon - Visualization with VOSViewer"
+title: "ASReview FTM Hackathon - Visualization of email domains with VOSViewer"
 output: html_notebook
 author: Bianca Kramer
 date: 2021-11-27
 ---
 
-# Load packages
-
-```{r include=FALSE}
+## 0. Load packages
+```{r message=FALSE, warning=FALSE}
 
 library(tidyverse)
 library(readxl)
@@ -16,9 +15,11 @@ library(tidytext)
 
 ```
 
-# Read source data (n=2509 records)
+## 1. Identifying email domains 
 
-```{r include=FALSE}
+## 1a. Read source data 
+(n=2509 records)
+```{r message=FALSE, warning=FALSE} 
 
 data_preprocessed <- read_excel("../data/preprocessed_data.xlsx", 
                     col_types = c("numeric", "text", "text", 
@@ -33,10 +34,9 @@ data_preprocessed <- data_preprocessed %>%
 
 ```
 
-# Retrieve sender and recipient domains from emails
-# 2109 mail records, 1429 with likely email addresses detected
-
-```{r include=FALSE}
+## 1b. Retrieve sender and recipient domains from emails
+(2109 mail records, 1429 with likely email addresses detected)
+```{r message=FALSE, warning=FALSE}
 
 #fiter emails (n=2109 records)
 data <- data_preprocessed %>%
@@ -59,7 +59,7 @@ data <- data %>%
   filter(stringr::str_detect(lines, selection))
 
 #check how many original records remain
-count <- data %>%
+count_records <- data %>%
   count(id) %>%
   nrow()
 #n=1884 (of 2109) records with likely email addresses
@@ -75,28 +75,24 @@ data <- data %>%
   filter(stringr::str_detect(strings, "\\.")) 
 
 #check how many original records remain
-count <- data %>%
+count_records <- data %>%
   count(id) %>%
   nrow()
 #n=1429 (of 1884) records with likely email addresses
 
-#check how many unique domain-like strings
-count <- data %>%
-  count(strings) %>%
-  nrow()
-#n=1366 (of 8732) unique strings
-
+rm(selection, selection_terms)
 
 #TODO keep to/from indications to provide directionality
 #but many records miss to/from indication, so will loose those
 
-#Note: records with email threads will have multiple 
+#Note: records with email threads can have multiple to/from email domain strings; records with multiple recipients will also result in multiple email domain strings per record
 
 ```
 
-# Further cleaning of domain strings
+# 1c. Further cleaning of domain strings
+(1366 records with 917 unique email domains)
 
-```{r include = FALSE}
+```{r message=FALSE, warning=FALSE}
 
 #read current list of top level domains
 tld <- read_tsv("https://data.iana.org/TLD/tlds-alpha-by-domain.txt") %>%
@@ -112,18 +108,69 @@ data_clean <- data %>%
   #filter on domain suffixes that are valid top level domains
   filter(suffix %in% tld)
 
-check <- data_clean %>%
-  select(strings, prefix, suffix) %>%
-  distinct()
+#check how many original records remain
+count_records <- data_clean %>%
+  count(id) %>%
+  nrow()
+#n=1386 (of 1429) records with likely email addresses
+
+#check how many unique domain strings 
+count_strings <- data_clean %>%
+  count(strings) %>%
+  nrow()
+#n=917 (of 7647) unique emai domain strings
+
+rm(tld)
 
 #TODO further clean domain prefixes
 
 ```
 
 
-# Prepare data for VOSviewer
+# 2. Prepare data for VOSviewer  
+Create JSON object according to these specs:   https://app.vosviewer.com/docs/file-types/json-file-type/
 
-```{r include = FALSE}
+## 2a. First element in JSON object: node list (called 'items')
+
+```{r message=FALSE, warning=FALSE}
+
+#create df of unique domains with weights as list column
+domains <- data_clean %>%
+  count(strings) %>%
+  distinct() %>%
+  arrange(strings) %>%
+  mutate(id = row_number()) %>%
+  rename(label = strings,
+         Documents = n) %>%
+  #nest(weights = c(Documents)) %>%
+  select(id, label, Documents)
+
+#transpose to list
+items <- domains %>%
+  purrr::transpose()
+
+#modify list to create a nested list element for weights
+
+#define helper function to modify list elements
+modifyList <- function(x){
+  x["weights"] <- list(x["Documents"])
+  x["Documents"] <- NULL
+  return(x)
+}
+
+#apply helper function to each list element
+items <- map(items, modifyList)
+
+
+
+```
+
+
+## Second element in JSON object: edge list (called 'links')
+
+```{r message=FALSE, warning=FALSE}
+
+a <- items
 
 
 

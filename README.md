@@ -26,7 +26,7 @@ Preprocessing is done as follows:
 1. Filter all records of type "Mail"
 2. Split the record content (column Abstract) into individual lines (using tokenization)
 3. Filter on lines likely containing email addresses (i.e. containing @ and/or "to:" / "from:" / "aan:" / "van:")
-4. Split lines into words (using tokenization). This automatically get rid of email prefixes by removing "@"
+4. Split lines into words (using tokenization). NB This automatically gets rid of email prefixes by removing "@"
 5. Filter on strings containing one period (.) to identify likely email domains
 6. Filter on actual email domains by matching to the [IANA list op top-level domains](https://data.iana.org/TLD/tlds-alpha-by-domain.txt)
 
@@ -41,6 +41,9 @@ Preprocessing is done as follows:
 
 ## Ideas for future improvement
 
-- further clean email domains (harmonize errors) 
-- distinguish from/to to create directional network (issue with data quality)
+- further clean email domains (harmonize OCR errors) 
+- distinguish from/to to create directional network (but: issue with data quality)
 - use date informtation to create time lapse visualization
+
+## Applicability to larger dataset 
+In principle, the method can be directly applied to a larger dataset (when preprocessing is done similar to the sample dataset). For a clear visualization, the cut-off value for which domains to include will need to be increased.  
