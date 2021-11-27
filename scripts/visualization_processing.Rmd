@@ -1,11 +1,15 @@
 ---
 title: "ASReview FTM Hackathon - Visualization of email domains with VOSViewer"
-output: html_notebook
-author: Bianca Kramer
-date: 2021-11-28
+author: "Bianca Kramer"
+date: '2021-11-28'
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
 ---
 
 ## 0. Load packages
+
 ```{r message=FALSE, warning=FALSE}
 
 library(jsonlite)
@@ -19,6 +23,7 @@ library(tidyverse)
 
 ## 1a. Read source data 
 (n=2509 records)
+
 ```{r message=FALSE, warning=FALSE} 
 
 data_preprocessed <- read_excel("../data/preprocessed_data.xlsx", 
@@ -36,6 +41,7 @@ data_preprocessed <- data_preprocessed %>%
 
 ## 1b. Retrieve sender and recipient domains from emails
 (2109 mail records, 1429 with likely email addresses detected)
+
 ```{r message=FALSE, warning=FALSE}
 
 #fiter emails (n=2109 records)
@@ -241,21 +247,6 @@ df_edges <- df_edges %>%
 links <- df_edges %>%  
   purrr::transpose()
 
-source_id <- links %>%
-  select(source_id) %>%
-  distinct() %>%
-
-target_id <- links %>%
-  select(target_id) %>%
-  distinct()
-
-source_id_match <- source_id %>%
-  left_join(df_nodes, by = c("source_id" = "label"))
-
-target_id_match <- target_id %>%
-  left_join(df_nodes, by = c("target_id" = "label"))
-  
-rm(i, nodes1, nodes2, combinations, list, edges)
   
 ```
 

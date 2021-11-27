@@ -40,8 +40,14 @@ For visualization in VOSViewer, a JSON object is created according to these spec
 
 The resulting JSON object can be found in the `output` folder, named `network_domains.json`.
 
-
 ## Network visualization
+
+For visualization, [VOSViewer Online](https://app.vosviewer.com/) is used, which is a web-based version of [VOSviewer](https://www.vosviewer.com/). It runs in a web browser and can be used to create and share interactive visualizations and to embed these visualizations in online platforms. VOSViewer Online is open source ([https://github.com/neesjanvaneck/VOSviewer-Online](https://github.com/neesjanvaneck/VOSviewer-Online)), and is developed by Ludo Waltman and Nees Jan van Eeck at CWTS (Netherlands). 
+
+After importing the created JSON object with network information into VOSViewer online, various settings for layout and clustering can be experimented with. The resulting network visualization can be exported as JSON object again (including all information for layout and clustering) and as static image. Both are stored in the folder `output` as and `VOSviewer-network_fract_3_1.json` and `VOSviewer-screenshot_fract_3_1.jpg`, respectively.    
+
+
+
 
 ## Result 
 
@@ -52,4 +58,4 @@ The resulting JSON object can be found in the `output` folder, named `network_do
 - use date informtation to create time lapse visualization
 
 ## Applicability to larger dataset 
-In principle, the method can be directly applied to a larger dataset (when preprocessing is done similar to the sample dataset). For a clear visualization, the cut-off value for which domains to include will need to be increased.  
+In principle, the method can be directly applied to a larger dataset (when preprocessing is done similar to the sample dataset). For a clear visualization, a cut-off value for which domains to include can be used (e..g based on node weight and/or link strength).  
