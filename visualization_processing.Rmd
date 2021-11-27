@@ -1,0 +1,129 @@
+---
+title: "ASReview FTM Hackathon - Visualization with VOSViewer"
+output: html_notebook
+author: Bianca Kramer
+date: 2021-11-27
+---
+
+# Load packages
+
+```{r include=FALSE}
+
+library(tidyverse)
+library(readxl)
+library(lubridate)
+library(tidytext)
+
+```
+
+# Read source data (n=2509 records)
+
+```{r include=FALSE}
+
+data_preprocessed <- read_excel("data/preprocessed_data.xlsx", 
+                    col_types = c("numeric", "text", "text", 
+                                  "text", "date", "text", "text"))
+
+data_preprocessed <- data_preprocessed %>%
+  rename(seqID = 1)
+
+#2509 records
+
+#NB column date has inconsistent formatting, but almost all emails have a date in column betterDate
+
+```
+
+# Retrieve sender and recipient domains from emails
+
+```{r include=FALSE}
+
+#fiter emails (n = 2109 records)
+data <- data_preprocessed %>%
+  filter(type == "Mail")
+
+#convert body of emails into separate lines (n = 291089 lines)
+data <- data %>%
+  tidytext::unnest_tokens(lines, abstract, token = "lines", drop = FALSE)
+
+#keep lines with (likely) email addresses (n=9628)
+#TODO optimize strings to filter on
+selection_terms <- c("@", 
+                     "to:", "to :", 
+                     "from:", "from :",
+                     "aan:", "aan :",
+                     "van:", "van :")
+selection <- str_flatten(selection_terms, "|")
+
+data <- data %>%
+  filter(stringr::str_detect(lines, selection))
+
+#check how many original records remain
+count <- data %>%
+  count(id) %>%
+  nrow()
+#n=1884 (of 2109) records with likely email addresses
+
+#convert remaining lines into separate words (n = 43925 lines)
+#NB tokenizing words removes punctuation (such as @) but keeps periods (.)
+#This suits this particular purpose well but good to be aware of
+data <- data %>%
+  tidytext::unnest_tokens(strings, lines, token = "words", drop = FALSE)
+
+#filter email adress domains xxx.xx  (n= 8732 lines)
+data <- data %>%
+  filter(stringr::str_detect(strings, "\\.")) 
+
+#check how many original records remain
+count <- data %>%
+  count(id) %>%
+  nrow()
+#n=1429 (of 1884) records with likely email addresses
+
+#check how many unique domain-like strings
+count <- data %>%
+  count(strings) %>%
+  nrow()
+#n=1366 (of 8732) unique strings
+
+
+#TODO keep to/from indications to provide directionality
+#but many records miss to/from indication, so will loose those
+
+#Note: records with email threads will have multiple 
+
+```
+
+# Further cleaning of domain strings
+
+```{r include = FALSE}
+
+#read current list of top level domains
+tld <- read_tsv("https://data.iana.org/TLD/tlds-alpha-by-domain.txt") %>%
+  rename(domain = 1) %>%
+  mutate(domain = str_to_lower(domain)) %>%
+  pull(domain)
+
+data_clean <- data %>%
+  #remove strings with > 1 periods (urls, email prefixes etc)
+  filter(str_count(strings, pattern = "\\.") == 1) %>%
+  #split domains into prefix and suffix
+  separate(strings, c("prefix", "suffix"), sep = "\\.", remove = FALSE) %>%
+  #filter on domain suffixes that are valid top level domains
+  filter(suffix %in% tld)
+
+check <- data_clean %>%
+  select(strings, prefix, suffix) %>%
+  distinct()
+
+#TODO further clean domain prefixes
+
+```
+
+
+# Prepare data for VOSviewer
+
+```{r include = FALSE}
+
+
+
+```
