@@ -16,7 +16,7 @@ The copied pre-processed data can be found in the `data` folder, named `preproce
 
 ## Processing data for visualization
 
-Data are processed for visualization using the R script `visualization_processing.Rmd` in the folder `scripts`.  
+Data are processed for visualization using the script in the R Markdown notebook `visualization_processing.Rmd` in the folder `scripts`.  
 Required R packages are: `readxl`, `tidytext` and `tidyverse`, which can be installed using the function `install.packages("package-name")`.
 
 Preprocessing is done as follows:

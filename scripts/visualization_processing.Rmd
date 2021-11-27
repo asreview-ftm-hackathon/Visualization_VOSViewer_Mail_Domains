@@ -130,26 +130,34 @@ rm(tld)
 # 2. Prepare data for VOSviewer  
 Create JSON object according to these specs:   https://app.vosviewer.com/docs/file-types/json-file-type/
 
-## 2a. First element in JSON object: node list (called 'items')
+## 2a. Keep each domain only once per record
+NB This is a judgement call, esp. when making a directional graph
+
+```{r message=FALSE, warning=FALSE}
+
+data_single <- data_clean %>%
+  select(strings, id) %>%
+  distinct()
+
+```
+
+## 2b. First element in JSON object: node list (called 'items')
 
 ```{r message=FALSE, warning=FALSE}
 
 #create df of unique domains with weights as list column
-domains <- data_clean %>%
+domains <- data_single %>%
   count(strings) %>%
   distinct() %>%
   arrange(strings) %>%
   mutate(id = row_number()) %>%
   rename(label = strings,
          Documents = n) %>%
-  #nest(weights = c(Documents)) %>%
   select(id, label, Documents)
 
 #transpose to list
 items <- domains %>%
   purrr::transpose()
-
-#modify list to create a nested list element for weights
 
 #define helper function to modify list elements
 modifyList <- function(x){
@@ -161,8 +169,6 @@ modifyList <- function(x){
 #apply helper function to each list element
 items <- map(items, modifyList)
 
-
-
 ```
 
 
@@ -170,8 +176,54 @@ items <- map(items, modifyList)
 
 ```{r message=FALSE, warning=FALSE}
 
-a <- items
+#only keep records with >1 email domain (n=808)
+count_records <- data_single %>%
+  count(id) %>%
+  filter(n > 1) %>%
+  pull(id)
 
+combinations <- data_single %>%
+  filter(id %in% count_records)
 
+nodes <- combinations %>%
+  pull(strings) %>%
+  unique()
 
+rm(count_records)
+
+#create list for edges and combinations
+list <- list(edges = NULL,
+             combinations = combinations)
+
+#iterate over vector with nodes to create edge list for each node
+#remove node from dataframe before next iteration
+for (i in nodes) {
+
+  nodes1 <- list$combinations %>%
+    filter(strings == i) %>%
+    rename(source_id = strings)
+  
+  nodes2 <- list$combinations %>%
+    filter(!strings == i) %>%
+    rename(target_id = strings)
+  
+  edges <- nodes1 %>%
+    left_join(nodes2, by = "id") %>%
+    count(source_id, target_id)
+  
+  combinations <- list$combinations %>%
+    filter(!strings == i)
+  
+  list$combinations <- combinations
+  list$edges <- bind_rows(list$edges, edges)
+
+}
+
+#create list from dataframe with edge list
+links <- list$edges %>%
+  filter(!is.na(target_id)) %>%
+  purrr::transpose()
+  
+rm(i, nodes1, nodes2, combinations, list, edges)
+  
 ```
