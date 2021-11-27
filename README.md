@@ -39,4 +39,8 @@ Preprocessing was done as follows:
 
 ## Result 
 
-## Ideas for future development
+## Ideas for future improvement
+
+- further clean email domains (harmonize errors) 
+- distinguish from/to to create directional network (issue with data quality)
+- use date informtation to create time lapse visualization
