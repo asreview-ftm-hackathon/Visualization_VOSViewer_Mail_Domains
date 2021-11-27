@@ -2,7 +2,7 @@
 
 ## Proposed idea
 
-Make a network visualization of email sender and recipient domains in the Shell papers using VOSViewer. This could be an alternative way to identify clusters within the email correspondence, complementing a keyword-based clustering approach. 
+Make a network visualization of email sender and recipient domains in the Shell papers using [VOSViewer](https://www.vosviewer.com/). This could be an alternative way to identify clusters within the email correspondence, complementing a keyword-based clustering approach. 
 
 ## Data
 The raw data is available on the [FTM repository](https://github.com/ftmnl/asr)
