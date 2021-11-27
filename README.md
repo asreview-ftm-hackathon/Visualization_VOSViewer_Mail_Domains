@@ -1,4 +1,4 @@
-# Network analysis of email sender and recipient domains
+# Network analysis of email sender and recipient domains in the Shell papers
 
 ## Proposed idea
 
@@ -65,8 +65,8 @@ For the network visualization shown here, the following settings were used:
 ## Ideas for future improvement
 
 - further clean email domains (harmonize OCR errors) 
-- distinguish from/to to create directional network (but: issue with data quality)
-- use date informtation to create time lapse visualization
+- distinguish from/to email addresses to create directional network (but: issue with data quality)
+- use date information to create time lapse visualization
 
 ## Applicability to larger dataset 
 In principle, the method can be directly applied to a larger dataset (when preprocessing is done similar to the sample dataset). For a clear visualization, a cut-off value for which domains to include can be used (e..g based on node weight and/or link strength).  
