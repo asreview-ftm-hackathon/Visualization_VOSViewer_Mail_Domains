@@ -14,7 +14,7 @@ repository, and the pre-processed data is copied from this repository.
 The copied pre-processed data can be found in the `data` folder, named `preprocessed_data.xlsx`.
 
 
-## Preprocessing
+## Processing data fro visualization
 
 Data are processed for visualization using the R script in  `visualization_processing.Rmd`.  
 Required R packages are: `readxl`, `tidytext` and `tidyverse`, which can be installed using the function `install.packages("package-name")`.
