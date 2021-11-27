@@ -7,7 +7,7 @@ Make a network visualization of email sender and recipient domains in the Shell 
 ## Data
 The raw data is available on the [FTM repository](https://github.com/ftmnl/asr)
 
-The script used for the basic-pre-processing can be found in the
+The script used for the basic-pre-processing can be found in the 
 [asreview-ftm-hackathon/Example-for-data-pre-processing-track](https://github.com/asreview-ftm-hackathon/Example-for-data-pre-processing-track)
 repository, and the pre-processed data is copied from this repository.
 
@@ -16,10 +16,10 @@ The copied pre-processed data can be found in the `data` folder, named `preproce
 
 ## Processing data for visualization
 
-Data are processed for visualization using the R script in  `visualization_processing.Rmd`.  
+Data are processed for visualization using the R script `visualization_processing.Rmd` in the folder `scripts`.  
 Required R packages are: `readxl`, `tidytext` and `tidyverse`, which can be installed using the function `install.packages("package-name")`.
 
-Preprocessing was done as follows:
+Preprocessing is done as follows:
 
 *Identifying email domains*
 
