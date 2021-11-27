@@ -44,12 +44,23 @@ The resulting JSON object can be found in the `output` folder, named `network_do
 
 For visualization, [VOSViewer Online](https://app.vosviewer.com/) is used, which is a web-based version of [VOSviewer](https://www.vosviewer.com/). It runs in a web browser and can be used to create and share interactive visualizations and to embed these visualizations in online platforms. VOSViewer Online is open source ([https://github.com/neesjanvaneck/VOSviewer-Online](https://github.com/neesjanvaneck/VOSviewer-Online)), and is developed by Ludo Waltman and Nees Jan van Eeck at CWTS (Netherlands). 
 
-After importing the created JSON object with network information into VOSViewer online, various settings for layout and clustering can be experimented with. The resulting network visualization can be exported as JSON object again (including all information for layout and clustering) and as static image. Both are stored in the folder `output` as and `VOSviewer-network_fract_3_1.json` and `VOSviewer-screenshot_fract_3_1.jpg`, respectively.    
+After importing the created JSON object with network information into VOSViewer online, various settings for layout and clustering can be experimented with. The online visualization allows zooming in and out and selecting single nodes to highlight their connections.
 
+The resulting network visualization can be exported as JSON object again (including all information for layout and clustering) and as static image. Both are stored in the folder `output` as  `VOSviewer-network_linlog_3_1.json` and `VOSviewer-screenshot_linlog_3_1.png`, respectively.    
 
+For the network visualization shown here, the following settings were used:
+(all other settings, including advanced settings, were used as default)
 
+- **Normalization method**: LinLog/modularity
+- **Layout**: Attraction: 3, Repulsion: 1
+- **Clustering**: Resolution: 10, Minimum cluster size: 10, Merge small clusters: yes 
 
 ## Result 
+
+
+![Network visualization of email domains in 2109 email records in the Shell Papers (November 2021), collected by Follow the Money](output/VOSviewer-screenshot_linlog_3_1.png)
+
+
 
 ## Ideas for future improvement
 
