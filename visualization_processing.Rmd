@@ -34,19 +34,20 @@ data_preprocessed <- data_preprocessed %>%
 ```
 
 # Retrieve sender and recipient domains from emails
+# 2109 mail records, 1429 with likely email addresses detected
 
 ```{r include=FALSE}
 
-#fiter emails (n = 2109 records)
+#fiter emails (n=2109 records)
 data <- data_preprocessed %>%
   filter(type == "Mail")
 
-#convert body of emails into separate lines (n = 291089 lines)
+#convert body of emails into separate lines (n=291089 lines)
 data <- data %>%
   tidytext::unnest_tokens(lines, abstract, token = "lines", drop = FALSE)
 
-#keep lines with (likely) email addresses (n=9628)
-#TODO optimize strings to filter on
+#keep lines with (likely) email addresses (n=9628 lines)
+#TODO optimize strings used in filter
 selection_terms <- c("@", 
                      "to:", "to :", 
                      "from:", "from :",
@@ -64,7 +65,7 @@ count <- data %>%
 #n=1884 (of 2109) records with likely email addresses
 
 #convert remaining lines into separate words (n = 43925 lines)
-#NB tokenizing words removes punctuation (such as @) but keeps periods (.)
+#NB Tokenizing words removes punctuation (such as @) but keeps periods (.)
 #This suits this particular purpose well but good to be aware of
 data <- data %>%
   tidytext::unnest_tokens(strings, lines, token = "words", drop = FALSE)
