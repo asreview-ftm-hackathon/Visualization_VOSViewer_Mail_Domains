@@ -20,7 +20,7 @@ library(tidytext)
 
 ```{r include=FALSE}
 
-data_preprocessed <- read_excel("data/preprocessed_data.xlsx", 
+data_preprocessed <- read_excel("../data/preprocessed_data.xlsx", 
                     col_types = c("numeric", "text", "text", 
                                   "text", "date", "text", "text"))
 
