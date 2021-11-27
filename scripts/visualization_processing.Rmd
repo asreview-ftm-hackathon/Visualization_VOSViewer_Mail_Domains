@@ -2,16 +2,16 @@
 title: "ASReview FTM Hackathon - Visualization of email domains with VOSViewer"
 output: html_notebook
 author: Bianca Kramer
-date: 2021-11-27
+date: 2021-11-28
 ---
 
 ## 0. Load packages
 ```{r message=FALSE, warning=FALSE}
 
-library(tidyverse)
+library(jsonlite)
 library(readxl)
-library(lubridate)
 library(tidytext)
+library(tidyverse)
 
 ```
 
@@ -131,7 +131,7 @@ rm(tld)
 Create JSON object according to these specs:   https://app.vosviewer.com/docs/file-types/json-file-type/
 
 ## 2a. Keep each domain only once per record
-NB This is a judgement call, esp. when making a directional graph
+NB Reconsider this when creating a directional graph
 
 ```{r message=FALSE, warning=FALSE}
 
@@ -142,6 +142,7 @@ data_single <- data_clean %>%
 ```
 
 ## 2b. First element in JSON object: node list (called 'items')
+917 list elements
 
 ```{r message=FALSE, warning=FALSE}
 
@@ -172,7 +173,8 @@ items <- map(items, modifyList)
 ```
 
 
-## Second element in JSON object: edge list (called 'links')
+## 2c. Second element in JSON object: edge list (called 'links')
+12639 list elements
 
 ```{r message=FALSE, warning=FALSE}
 
@@ -222,8 +224,28 @@ for (i in nodes) {
 #create list from dataframe with edge list
 links <- list$edges %>%
   filter(!is.na(target_id)) %>%
+  rename(strength = n) %>%
   purrr::transpose()
   
 rm(i, nodes1, nodes2, combinations, list, edges)
   
 ```
+
+
+## 2d. Create JSON object containing both 'items' and 'links'
+
+```{r}
+
+# Create list
+list <- list()
+list$network <- list(items = items,
+                     links = links)
+
+# Save as json file
+json_object <- toJSON(list, pretty = TRUE, auto_unbox = TRUE)
+write(json_object, "../output/network_domains.json")
+
+rm(list, json_object, items, links)
+
+```
+

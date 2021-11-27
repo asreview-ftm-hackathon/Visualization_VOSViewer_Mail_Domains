@@ -17,7 +17,7 @@ The copied pre-processed data can be found in the `data` folder, named `preproce
 ## Processing data for visualization
 
 Data are processed for visualization using the script in the R Markdown notebook `visualization_processing.Rmd` in the folder `scripts`.  
-Required R packages are: `readxl`, `tidytext` and `tidyverse`, which can be installed using the function `install.packages("package-name")`.
+Required R packages are:  `jsonlite`, `readxl`, `tidytext` and `tidyverse`, which can be installed using the function `install.packages("package-name")`.
 
 Preprocessing is done as follows:
 
@@ -32,7 +32,13 @@ Preprocessing is done as follows:
 
 *Formatting for visualization*
 
-[...]
+For visualization in VOSViewer, a JSON object is created according to these specifications: [https://app.vosviewer.com/docs/file-types/json-file-type/](https://app.vosviewer.com/docs/file-types/json-file-type/):
+
+1. Create node list of all domains, with number of records the domain occurs in as 'weight'
+2. Create edge list for all combinations of domains that occur together in a record at least once, with the number of records the combination occurs in as 'strength'.
+3. Create a nested list with node list and edge list and store as JSON object
+
+The resulting JSON object can be found in the `output` folder, named `network_domains.json`.
 
 
 ## Network visualization
