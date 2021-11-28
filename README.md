@@ -1,4 +1,4 @@
-# Network analysis of email sender and recipient domains in the Shell papers
+# Network analysis of email sender and recipient domains in the 'Shell papers' obtained by Follow the Money
 
 ## Proposed idea
 
