@@ -48,7 +48,7 @@ After importing the created JSON object with network information into VOSViewer 
 
 The resulting network visualization can be exported as JSON object again (including all information for layout and clustering) and as static image. Both are stored in the folder `output` as  `VOSviewer-network_linlog_3_1.json` and `VOSviewer-screenshot_linlog_3_1.png`, respectively.    
 
-For the network visualization shown here, the following settings were used:
+For the network visualization shown here (overview and detail image), the following settings were used:
 (all other settings, including advanced settings, were used as default)
 
 - **Scale**: 0.7
