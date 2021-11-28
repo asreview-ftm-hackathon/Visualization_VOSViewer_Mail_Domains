@@ -79,4 +79,4 @@ Another group in this hackathon also looked at email exchanges over time, with s
 https://github.com/asreview-ftm-hackathon/data-preprocessing_toogoodtogo_threatlines
 
 ## Applicability to larger dataset 
-In principle, the method can be directly applied to a larger dataset (when preprocessing is done similar to the sample dataset). For a clear visualization, a cut-off value for which domains to include can be used (e..g based on node weight and/or link strength).  
+In principle, the method can be directly applied to a larger dataset, potentially with additional preprocessing steps (as discussed above).  For a clear visualization of a much larger dataset, a cut-off value for which domains to include can be used (e.g based on node weight and/or link strength).  
