@@ -51,6 +51,7 @@ The resulting network visualization can be exported as JSON object again (includ
 For the network visualization shown here, the following settings were used:
 (all other settings, including advanced settings, were used as default)
 
+- **Scale**: 0.7
 - **Normalization method**: LinLog/modularity
 - **Layout**: Attraction: 3, Repulsion: 1
 - **Clustering**: Resolution: 10, Minimum cluster size: 10, Merge small clusters: yes 
@@ -58,12 +59,14 @@ For the network visualization shown here, the following settings were used:
 ## Result 
 
 
-![Network visualization of email domains in 2109 email records in the Shell Papers (November 2021), collected by Follow the Money](output/VOSviewer-screenshot_linlog_3_1.png)
+![Shell papers: network visualization of email domains](output/VOSviewer-screenshot_linlog_3_1.png)
 
+Nodes represent email domains, with node size relative to the number of records the domain appears in. Edges link email domains present in the same document(s), either as sender/receiver or as multiple receivers. 
+
+Clusters are determined algorithmically by the application, representing email domains that are more closely connected to each other than to other email domains.
 
 
 ## Ideas for future improvement
-
 - further clean email domains (harmonize OCR errors) 
 - distinguish from/to email addresses to create directional network (but: issue with data quality)
 - use date information to create time lapse visualization
