@@ -42,7 +42,7 @@ The resulting JSON object can be found in the `output` folder, named `network_do
 
 ## Network visualization
 
-For visualization, [VOSViewer Online](https://app.vosviewer.com/) is used, which is a web-based version of [VOSviewer](https://www.vosviewer.com/). It runs in a web browser and can be used to create and share interactive visualizations and to embed these visualizations in online platforms. VOSViewer Online is open source ([https://github.com/neesjanvaneck/VOSviewer-Online](https://github.com/neesjanvaneck/VOSviewer-Online)), and is developed by Ludo Waltman and Nees Jan van Eeck at CWTS (Netherlands). 
+For visualization, [VOSViewer Online](https://app.vosviewer.com/) is used, which is a web-based version of [VOSviewer](https://www.vosviewer.com/). It runs in a web browser and can be used to create and share interactive visualizations and to embed these visualizations in online platforms. VOSViewer Online is open source ([https://github.com/neesjanvaneck/VOSviewer-Online](https://github.com/neesjanvaneck/VOSviewer-Online)), and is developed by Ludo Waltman and Nees Jan van Eck at CWTS (Netherlands). 
 
 After importing the created JSON object with network information into VOSViewer online, various settings for layout and clustering can be experimented with. The online visualization allows zooming in and out and selecting single nodes to highlight their connections.
 
