@@ -61,15 +61,20 @@ For the network visualization shown here, the following settings were used:
 
 ![Shell papers: network visualization of email domains](output/VOSviewer-screenshot_linlog_3_1.png)
 
-**Nodes** represent email domains, with **node** size relative to the number of records the domain appears in. **Edges** link email domains present in the same document(s), either as sender/receiver or as multiple receivers. 
+**Nodes** represent email domains, with **node size** relative to the number of records the domain appears in. **Edges** link email domains present in the same document(s), either as sender/receiver or as multiple receivers. 
 
-**Clusters** are determined algorithmically by the application, representing email domains that are more closely connected to each other than to other email domains.
+**Clusters** (distinguished by colour) are determined algorithmically by the application, representing email domains that are more closely connected to each other than to other email domains.
 
+A note on information density: the network is quite dense due to the decision to include all datapoints. However, since the online version allows drilling down into indivudual datapoints or clusters, it can be considered to support **exploration of the data** over an **initial overview of main trends**. 
 
 ## Ideas for future improvement
 - further clean email domains (harmonize OCR errors) 
-- distinguish from/to email addresses to create directional network (but: issue with data quality)
+- distinguish From/To email addresses to create directional network (but: issue with data quality)
+- separate out email threads (Replies/Forwards)
 - use date information to create time lapse visualization
+
+Another group in this hackathon also looked at email exchanges over time, with some additional considerations re: data preprocessing:
+https://github.com/asreview-ftm-hackathon/data-preprocessing_toogoodtogo_threatlines
 
 ## Applicability to larger dataset 
 In principle, the method can be directly applied to a larger dataset (when preprocessing is done similar to the sample dataset). For a clear visualization, a cut-off value for which domains to include can be used (e..g based on node weight and/or link strength).  
