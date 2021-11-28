@@ -61,9 +61,9 @@ For the network visualization shown here, the following settings were used:
 
 ![Shell papers: network visualization of email domains](output/VOSviewer-screenshot_linlog_3_1.png)
 
-Nodes represent email domains, with node size relative to the number of records the domain appears in. Edges link email domains present in the same document(s), either as sender/receiver or as multiple receivers. 
+**Nodes** represent email domains, with **node** size relative to the number of records the domain appears in. **Edges** link email domains present in the same document(s), either as sender/receiver or as multiple receivers. 
 
-Clusters are determined algorithmically by the application, representing email domains that are more closely connected to each other than to other email domains.
+**Clusters** are determined algorithmically by the application, representing email domains that are more closely connected to each other than to other email domains.
 
 
 ## Ideas for future improvement
